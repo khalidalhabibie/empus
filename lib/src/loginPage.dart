@@ -22,7 +22,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailController  = TextEditingController();
+  final usernameController  = TextEditingController();
   final passwordController  = TextEditingController();
   String message = '';
   
@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
 
 Future <bool> _login() async {
 
-  if (emailController == "khalidalhabibie@gmail.com"  && passwordController == "passwordkhalid"){
+  if (usernameController == "khalidalhabibie"  && passwordController == "passwordkhalid"){
       return true;
   }
   return false;
@@ -193,10 +193,10 @@ Future <bool> _login() async {
     );
   }
 
-  Widget _emailPasswordWidget() {
+  Widget _usernamePasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Email",emailController),
+        _entryField("username",usernameController),
         _entryField("Password",passwordController, isPassword: true),
       ],
     );
@@ -239,7 +239,7 @@ Future <bool> _login() async {
                       SizedBox(
                         height: 50,
                       ),
-                      _emailPasswordWidget(),
+                      _usernamePasswordWidget(),
                       SizedBox(
                         height: 20,
                       ),
