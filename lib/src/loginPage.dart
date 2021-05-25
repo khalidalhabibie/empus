@@ -1,3 +1,4 @@
+import 'package:empus/src/welcomePage.dart';
 import 'package:flutter/material.dart';
 /*
 import 'package:DC19/src/signUp.dart';
@@ -25,13 +26,20 @@ class _LoginPageState extends State<LoginPage> {
   final usernameController  = TextEditingController();
   final passwordController  = TextEditingController();
   String message = '';
+  String username = "khalidalhabibie";
+  String password = "123";
+  bool isSuccess = false;
   
 
 
 Future <bool> _login() async {
 
-  if (usernameController == "khalidalhabibie"  && passwordController == "passwordkhalid"){
-      return true;
+  String usernameUser = usernameController.text;
+  String passwordUser = passwordController.text;
+
+  if (usernameUser == username && passwordUser == password){
+    isSuccess = true;
+    return true;
   }
   return false;
 
@@ -186,7 +194,7 @@ Future <bool> _login() async {
           ),
           children: [
             TextSpan(
-              text: 'ssssss',
+              text: 'ss',
               style: TextStyle(color: Colors.white, fontSize: 30),
             ),
           ]),
@@ -197,7 +205,7 @@ Future <bool> _login() async {
     return Column(
       children: <Widget>[
         _entryField("username",usernameController),
-        _entryField("Password",passwordController, isPassword: true),
+        _entryField("Password",passwordController, isPassword: false),
       ],
     );
   }
@@ -249,12 +257,15 @@ Future <bool> _login() async {
                         child:
                         Text('Login',style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),),
                         onPressed:()async{
-                          if (_login() == true){
+                          _login(); // call login future
+
+                          // check credential
+                          if (isSuccess == true){
                             message = "success";
-                            /*
+                            
                             Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Home(token: token)));
-                              */
+                               builder: (context) => WelcomePage()));
+                              
                           }
                           else{
                             message = "wrong credential";
