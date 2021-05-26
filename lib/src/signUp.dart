@@ -16,12 +16,13 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
  // username, namalengkap,nomerhp,email, password 
  final nameController  = TextEditingController();
- final phoneController  = TextEditingController();
  final emailController  = TextEditingController();
  final passwordController  = TextEditingController(); 
  String message = '';
  bool isSuccess = false;
- bool isValid = false;
+ bool isNotNullValid = false;
+  bool isValid = false;
+ bool isEmailValid = false;
 
   Widget _backButton() {
     return InkWell(
@@ -44,11 +45,11 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  bool isEmailValid(String value){
+  bool isEmailValidor(String value){
     if(EmailValidator.validate(value) == true){
-      return isValid = true; 
+      return isNotNullValid = true; 
     }
-    return isValid = false;
+    return isNotNullValid = false;
   }
 
   bool isNotNull(String value){
@@ -60,13 +61,9 @@ class _SignUpState extends State<SignUp> {
 
   Widget _entryField(String title,  myController ,{bool isPassword = false,bool isEmail = false}) {
     //check controller , it's null?
-    if (isNotNull(myController.text) == true){
-      isValid = true;
-    }
-
     //check email valid
-    if (isEmail == true  && isEmailValid(myController.text.toLowerCase()) == true ){
-      isValid = true;
+    if (isEmail == true  && isEmailValidor(myController.text.toLowerCase()) == true ){
+      isEmailValid = true;
     }
 
     return Container(
@@ -200,15 +197,21 @@ class _SignUpState extends State<SignUp> {
                         child:
                         Text('Sign Up',style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),),
                         onPressed:(){
-            
-                          if(isValid == false){
-                              setState(() {
-                               message = "data invalid";  
+                          if ((isNotNull(nameController.text) && isNotNull(emailController.text)&& isNotNull(passwordController.text)) == true){
+                             setState(() {
+                               isNotNullValid = true; 
                               });
+                            }
+
+                          if(isNotNullValid == true && isEmailValid == true ){
+                             Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => signIn()));
+                              
                           }
                           else{
-                              Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => signIn()));
+                             setState(() {
+                               message = "data invalid";  
+                              });
                         }
                           }
                         ),
