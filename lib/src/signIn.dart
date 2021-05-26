@@ -1,7 +1,10 @@
+import 'welcome.dart';
 import 'package:flutter/material.dart';
+
+import 'signUp.dart';
+
+import 'home.dart';
 /*
-import 'package:DC19/src/signUp.dart';
-import 'package:DC19/src/Home.dart';
 import 'package:DC19/src/screentwo.dart';
 */
 import 'package:google_fonts/google_fonts.dart';
@@ -12,30 +15,26 @@ import 'dart:io';
 //import 'package:json_annotation/json_annotation.dart';
 import 'widget/bezierContainer.dart';
 
-class LoginPage extends StatefulWidget {
-  //LoginPage({Key key, this.title}) : super(key: key);
+class signIn extends StatefulWidget {
+  //signIn({Key key, this.title}) : super(key: key);
 
   //final String title;
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _signInState createState() => _signInState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final emailController  = TextEditingController();
+class _signInState extends State<signIn> {
+  final usernameController  = TextEditingController();
   final passwordController  = TextEditingController();
   String message = '';
+  String username = "khalid";
+  String password = "123";
+  bool isSuccess = false;
   
 
 
-Future <bool> _login() async {
-
-  if (emailController == "khalidalhabibie@gmail.com"  && passwordController == "passwordkhalid"){
-      return true;
-  }
-  return false;
-
-}
+  
 
   @override
   Widget _backButton() {
@@ -57,6 +56,15 @@ Future <bool> _login() async {
         ),
       ),
     );
+  }
+
+   bool isValid(String  name, String pass){
+    if (name == username && pass == password){
+        isSuccess = true;
+        return true;
+    }
+    return false;
+    
   }
 
   Widget _entryField(String title,  myController ,{bool isPassword = false}) {
@@ -81,64 +89,36 @@ Future <bool> _login() async {
     );
   }
 
-  Widget _submitButton() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.shade200,
-                //offset: Offset(2, 4),
-                //blurRadius: 5,
-                //spreadRadius: 2
-                )
-          ],
-         color: Colors.white),
-      child: Text(
-        'Login',
-        style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  Widget _divider() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          Text('or',
-            style: TextStyle(color: Colors.white)),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ],
-      ),
-    );
-  }
 
  
+  Widget _title() {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+           text: 'EMPUS',
+          style: GoogleFonts.mcLaren(
+            textStyle: Theme.of(context).textTheme.display1,
+            fontSize: 35,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+          children: [
+            TextSpan(
+              text: 'ss',
+              style: TextStyle(color: Colors.white, fontSize: 30),
+            ),
+          ]),
+    );
+  }
+
+  Widget _usernamePasswordWidget() {
+    return Column(
+      children: <Widget>[
+        _entryField("username",usernameController),
+        _entryField("Password",passwordController, isPassword: true),
+      ],
+    );
+  }
 
   Widget _createAccountLabel() {
     return Container(
@@ -155,13 +135,12 @@ Future <bool> _login() async {
             width: 10,
           ),
           InkWell(
-            onTap: () {/*
+            onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()));
-                  */
+                  MaterialPageRoute(builder: (context) => SignUp()));
             },
             child: Text(
-              'Register',
+              'Sign Up',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,
@@ -173,43 +152,13 @@ Future <bool> _login() async {
     );
   }
 
-  Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-           text: 'EMPUS',
-          style: GoogleFonts.mcLaren(
-            textStyle: Theme.of(context).textTheme.display1,
-            fontSize: 35,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
-          children: [
-            TextSpan(
-              text: 'ssssss',
-              style: TextStyle(color: Colors.white, fontSize: 30),
-            ),
-          ]),
-    );
-  }
-
-  Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField("Email",emailController),
-        _entryField("Password",passwordController, isPassword: true),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-            //height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            height: MediaQuery.of(context).size.height,
+             height: MediaQuery.of(context).size.height,
+            width:MediaQuery.of(context).size.width ,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5)),
                 boxShadow: <BoxShadow>[
@@ -239,7 +188,7 @@ Future <bool> _login() async {
                       SizedBox(
                         height: 50,
                       ),
-                      _emailPasswordWidget(),
+                      _usernamePasswordWidget(),
                       SizedBox(
                         height: 20,
                       ),
@@ -247,24 +196,30 @@ Future <bool> _login() async {
                         padding: EdgeInsets.symmetric(vertical: 10),
                         color:Colors.white,
                         child:
-                        Text('Login',style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),),
-                        onPressed:()async{
-                          if (_login() == true){
-                            message = "success";
-                            /*
+                        Text('sign In',style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),),
+                        onPressed:(){
+                         
+                          isSuccess = isValid(usernameController.text, passwordController.text);
+                          // call signIn future
+                          // check credential
+                          if (isSuccess == true){
+                            setState(() {
+                              message = "success";
+                            });
+                            
+                            isSuccess = false;
                             Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Home(token: token)));
-                              */
+                               builder: (context) => Home()));
                           }
                           else{
-                            message = "wrong credential";
+                            setState(() {
+                              message = "wrong credential";
+                            });
                           }
                         }
                       ,
                       ),
-                      Text(message,style: TextStyle(fontSize: 10.0,color: Colors.white),),
-                      //Text(.toString(),style: TextStyle(fontSize: 20.0,color: Colors.red),),
-                      //Text(token.length.toString(),style: TextStyle(fontSize: 20.0,color: Colors.red),),
+                      Text(message,style: TextStyle(fontSize: 13.0,color: Colors.red),),
                       Expanded(
                         flex: 2,
                         child: SizedBox(),

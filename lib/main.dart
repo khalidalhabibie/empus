@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'src/welcomePage.dart';
+import 'src/welcome.dart';
 
 
 void main() => runApp(MyApp());
@@ -16,11 +16,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
          primarySwatch: Colors.blue,
          textTheme:GoogleFonts.latoTextTheme(textTheme).copyWith(
-           body1: GoogleFonts.montserrat(textStyle: textTheme.body1),
+           body1: GoogleFonts.montserrat(textStyle: textTheme.display1),
          ),
       ),
       debugShowCheckedModeBanner: false,
-      home: WelcomePage(),
+      home: Welcome(),
     );
   }
 }
