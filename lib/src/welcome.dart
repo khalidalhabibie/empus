@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'loginPage.dart';
-//import 'signUp.dart';
+import 'signIn.dart';
+import 'signUp.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class WelcomePage extends StatefulWidget {
-  //WelcomePage({Key key, this.title}) : super(key: key);
-
-  //final String title;
-
+class Welcome extends StatefulWidget {
   @override
-  _WelcomePageState createState() => _WelcomePageState();
+  _WelcomeState createState() => _WelcomeState();
 }
 
-class _WelcomePageState extends State<WelcomePage> {
+class _WelcomeState extends State<Welcome> {
   Widget _submitButton() {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+            context, MaterialPageRoute(builder: (context) => signIn()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -34,18 +30,17 @@ class _WelcomePageState extends State<WelcomePage> {
             ],
             color: Colors.white),
         child: Text(
-          'Login',
+          'Sign In',
           style: TextStyle(fontSize: 20, color: Colors.blueAccent),
         ),
       ),
     );
   }
-/*
   Widget _signUpButton() {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpPage()));
+            context, MaterialPageRoute(builder: (context) => SignUp()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -56,49 +51,21 @@ class _WelcomePageState extends State<WelcomePage> {
           border: Border.all(color: Colors.white, width: 2),
         ),
         child: Text(
-          'Register now',
+          'Sign Up',
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
     );
   }
-  */
-
-  Widget _label() {
-    return Container(
-        margin: EdgeInsets.only(top: 40, bottom: 20),
-        child: Column(
-          children: <Widget>[
-        /*
-            Text(
-              'DC19 adalah aplikasi untuk merekam suhu pengguna',
-              style: TextStyle(color: Colors.white, fontSize: 17),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            */
-            Text(
-              'stay safe and keep healthy',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ],
-        ));
-  }
-
   Widget _title() {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
           text: 'EMPUS',
           style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.display1,
+            textStyle: Theme.of(context).textTheme.bodyText2,
             fontSize: 35,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w400,
             color: Colors.white,
           ),
           children: [
@@ -142,13 +109,10 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(
                   height: 20,
                 ),
-                /*
                 _signUpButton(),
                 SizedBox(
                   height: 20,
                 ),
-                */
-                _label()
               ],
             ),
           ),

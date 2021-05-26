@@ -1,7 +1,8 @@
-import 'package:empus/src/welcomePage.dart';
+import 'welcome.dart';
 import 'package:flutter/material.dart';
+
+import 'signUp.dart';
 /*
-import 'package:DC19/src/signUp.dart';
 import 'package:DC19/src/Home.dart';
 import 'package:DC19/src/screentwo.dart';
 */
@@ -13,16 +14,16 @@ import 'dart:io';
 //import 'package:json_annotation/json_annotation.dart';
 import 'widget/bezierContainer.dart';
 
-class LoginPage extends StatefulWidget {
-  //LoginPage({Key key, this.title}) : super(key: key);
+class signIn extends StatefulWidget {
+  //signIn({Key key, this.title}) : super(key: key);
 
   //final String title;
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _signInState createState() => _signInState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _signInState extends State<signIn> {
   final usernameController  = TextEditingController();
   final passwordController  = TextEditingController();
   String message = '';
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   
 
 
-Future <bool> _login() async {
+Future <bool> _signIn() async {
 
   String usernameUser = usernameController.text;
   String passwordUser = passwordController.text;
@@ -106,81 +107,12 @@ Future <bool> _login() async {
           ],
          color: Colors.white),
       child: Text(
-        'Login',
+        'signIn',
         style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),
       ),
     );
   }
-
-  Widget _divider() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          Text('or',
-            style: TextStyle(color: Colors.white)),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ],
-      ),
-    );
-  }
-
  
-
-  Widget _createAccountLabel() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
-      alignment: Alignment.bottomCenter,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Don\'t have an account ?',
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.white),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          InkWell(
-            onTap: () {/*
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()));
-                  */
-            },
-            child: Text(
-              'Register',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
   Widget _title() {
     return RichText(
       textAlign: TextAlign.center,
@@ -205,8 +137,40 @@ Future <bool> _login() async {
     return Column(
       children: <Widget>[
         _entryField("username",usernameController),
-        _entryField("Password",passwordController, isPassword: false),
+        _entryField("Password",passwordController, isPassword: true),
       ],
+    );
+  }
+
+  Widget _createAccountLabel() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 20),
+      alignment: Alignment.bottomCenter,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Don\'t have an account ?',
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.white),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUp()));
+            },
+            child: Text(
+              'Sign Up',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -255,17 +219,14 @@ Future <bool> _login() async {
                         padding: EdgeInsets.symmetric(vertical: 10),
                         color:Colors.white,
                         child:
-                        Text('Login',style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),),
+                        Text('sign In',style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),),
                         onPressed:()async{
-                          _login(); // call login future
-
+                          _signIn(); // call signIn future
                           // check credential
                           if (isSuccess == true){
                             message = "success";
-                            
                             Navigator.of(context).push(MaterialPageRoute(
-                               builder: (context) => WelcomePage()));
-                              
+                               builder: (context) => Welcome()));
                           }
                           else{
                             message = "wrong credential";
@@ -273,9 +234,7 @@ Future <bool> _login() async {
                         }
                       ,
                       ),
-                      Text(message,style: TextStyle(fontSize: 10.0,color: Colors.white),),
-                      //Text(.toString(),style: TextStyle(fontSize: 20.0,color: Colors.red),),
-                      //Text(token.length.toString(),style: TextStyle(fontSize: 20.0,color: Colors.red),),
+                      Text(message,style: TextStyle(fontSize: 13.0,color: Colors.red),),
                       Expanded(
                         flex: 2,
                         child: SizedBox(),
