@@ -2,8 +2,9 @@ import 'welcome.dart';
 import 'package:flutter/material.dart';
 
 import 'signUp.dart';
+
+import 'home.dart';
 /*
-import 'package:DC19/src/Home.dart';
 import 'package:DC19/src/screentwo.dart';
 */
 import 'package:google_fonts/google_fonts.dart';
@@ -27,24 +28,13 @@ class _signInState extends State<signIn> {
   final usernameController  = TextEditingController();
   final passwordController  = TextEditingController();
   String message = '';
-  String username = "khalidalhabibie";
+  String username = "khalid";
   String password = "123";
   bool isSuccess = false;
   
 
 
-Future <bool> _signIn() async {
-
-  String usernameUser = usernameController.text;
-  String passwordUser = passwordController.text;
-
-  if (usernameUser == username && passwordUser == password){
-    isSuccess = true;
-    return true;
-  }
-  return false;
-
-}
+  
 
   @override
   Widget _backButton() {
@@ -66,6 +56,15 @@ Future <bool> _signIn() async {
         ),
       ),
     );
+  }
+
+   bool isValid(String  name, String pass){
+    if (name == username && pass == password){
+        isSuccess = true;
+        return true;
+    }
+    return false;
+    
   }
 
   Widget _entryField(String title,  myController ,{bool isPassword = false}) {
@@ -179,9 +178,8 @@ Future <bool> _signIn() async {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-            //height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            height: MediaQuery.of(context).size.height,
+             height: MediaQuery.of(context).size.height,
+            width:MediaQuery.of(context).size.width ,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5)),
                 boxShadow: <BoxShadow>[
@@ -220,16 +218,24 @@ Future <bool> _signIn() async {
                         color:Colors.white,
                         child:
                         Text('sign In',style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),),
-                        onPressed:()async{
-                          _signIn(); // call signIn future
+                        onPressed:(){
+                         
+                          isSuccess = isValid(usernameController.text, passwordController.text);
+                          // call signIn future
                           // check credential
                           if (isSuccess == true){
-                            message = "success";
+                            setState(() {
+                              message = "success";
+                            });
+                            
+                            isSuccess = false;
                             Navigator.of(context).push(MaterialPageRoute(
-                               builder: (context) => Welcome()));
+                               builder: (context) => Home()));
                           }
                           else{
-                            message = "wrong credential";
+                            setState(() {
+                              message = "wrong credential";
+                            });
                           }
                         }
                       ,

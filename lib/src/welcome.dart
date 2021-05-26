@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'signIn.dart';
 import 'signUp.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart'; 
+ 
 
 class Welcome extends StatefulWidget {
   @override
@@ -79,6 +81,7 @@ class _WelcomeState extends State<Welcome> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Scaffold(
       body:SingleChildScrollView(
         child:Container(

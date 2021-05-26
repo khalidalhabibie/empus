@@ -6,7 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter/services.dart';  
 class SignUp extends StatefulWidget {
 
   @override
@@ -155,12 +155,12 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Scaffold(
       body: SingleChildScrollView(
         child:Container(
-          //height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height,
+            width:MediaQuery.of(context).size.width ,
           decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5)),
                 boxShadow: <BoxShadow>[
@@ -202,7 +202,9 @@ class _SignUpState extends State<SignUp> {
                         onPressed:(){
             
                           if(isValid == false){
-                            message = "data invalid";
+                              setState(() {
+                               message = "data invalid";  
+                              });
                           }
                           else{
                               Navigator.push(
