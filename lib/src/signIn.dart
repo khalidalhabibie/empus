@@ -89,28 +89,7 @@ class _signInState extends State<signIn> {
     );
   }
 
-  Widget _submitButton() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.shade200,
-                //offset: Offset(2, 4),
-                //blurRadius: 5,
-                //spreadRadius: 2
-                )
-          ],
-         color: Colors.white),
-      child: Text(
-        'signIn',
-        style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),
-      ),
-    );
-  }
+
  
   Widget _title() {
     return RichText(
