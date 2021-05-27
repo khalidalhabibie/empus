@@ -11,7 +11,7 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
-  Widget _submitButton() {
+  Widget _signInButton() {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -64,10 +64,10 @@ class _WelcomeState extends State<Welcome> {
       textAlign: TextAlign.center,
       text: TextSpan(
           text: 'EMPUS',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.bodyText2,
+          style: GoogleFonts.mcLaren(
+            textStyle: Theme.of(context).textTheme.bodyText1,
             fontSize: 35,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
           children: [
@@ -108,7 +108,7 @@ class _WelcomeState extends State<Welcome> {
                 SizedBox(
                   height: 80,
                 ),
-                _submitButton(),
+               _signInButton(),
                 SizedBox(
                   height: 20,
                 ),
