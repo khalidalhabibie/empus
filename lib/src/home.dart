@@ -23,6 +23,8 @@ class _HomeState extends State<Home> {
   final emailController  = TextEditingController();
   final passwordController  = TextEditingController();  
   String urlImage = 'https://cataas.com/cat';
+  String urlImage1 = 'https://cataas.com/cat';
+  String urlImage2 = 'https://cataas.com/c';
 
   Widget _backButton() {
     return InkWell(
@@ -73,14 +75,14 @@ class _HomeState extends State<Home> {
     return InkWell(
       onTap: () {
         
-        if  (urlImage == "https://cataas.com/cat"){
+        if  (urlImage == urlImage1){
              setState(() {
-             urlImage = "https://cataas.com/c";
+             urlImage = urlImage2;
         });
        }
        else{
          setState(() {
-           urlImage = "https://cataas.com/cat";
+           urlImage = urlImage1;
          });
        }
        
@@ -159,16 +161,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 
-               
-            
-           
-               //Positioned(top: 40, left: 5, child: _backButton()),
-               //Positioned(top: 40, right: 5, child: _logoutButton()),
-               //Positioned(bottom: 40, left: 10, child: _refreshButton()),
-               // Positioned(
-                    //top: -MediaQuery.of(context).size.height * .15,
-                    //right: -MediaQuery.of(context).size.width * .4,
-                    
+ 
                     //child: BezierContainer())
               ],
                         

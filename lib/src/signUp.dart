@@ -14,14 +14,14 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
- // username, namalengkap,nomerhp,email, password 
+ 
  final nameController  = TextEditingController();
  final emailController  = TextEditingController();
  final passwordController  = TextEditingController(); 
  String message = '';
  bool isSuccess = false;
  bool isNotNullValid = false;
-  bool isValid = false;
+ bool isValid = false;
  bool isEmailValid = false;
 
   Widget _backButton() {
