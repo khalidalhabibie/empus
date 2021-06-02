@@ -10,6 +10,5 @@ app flutter based what show you cats :)
 4. pada home :
     - refresh digunakan untuk refresh gambar tapi masih ada permasalahan dengan image cache
     - logout digunakan untuk kembali ke welcome page
-    - back kembali ke login page
     - gambar belum bisa handle jika tidak terkoneksi jaringan
 ```
