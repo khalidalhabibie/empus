@@ -3,27 +3,50 @@ import 'widget/bezierContainer.dart';
 import '/src/signIn.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:email_validator/email_validator.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:flutter/services.dart';  
-class SignUp extends StatefulWidget {
+import 'package:flutter/services.dart';
 
+class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
- 
- final nameController  = TextEditingController();
- final emailController  = TextEditingController();
- final passwordController  = TextEditingController(); 
- String message = '';
- bool isSuccess = false;
- bool isNotNullValid = false;
- bool isValid = false;
- bool isEmailValid = false;
+  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
+  String message = '';
+  bool isSuccess = false;
+  bool isNotNullValid = false;
+  bool isValid = false;
+  bool isEmailValid = false;
+
+  //dispose
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  // check email is valid
+  bool _isEmailValidor(String value) {
+    if (EmailValidator.validate(value) == true) {
+      return isNotNullValid = true;
+    }
+    return isNotNullValid = false;
+  }
+
+  // check controller it's not nil
+  bool _isNotNull(String value) {
+    if (value != "") {
+      return isValid = true;
+    }
+    return isValid = false;
+  }
+
+  // back button
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -38,31 +61,22 @@ class _SignUpState extends State<SignUp> {
               child: Icon(Icons.arrow_back_ios, color: Colors.white),
             ),
             Text('Back',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,color: Colors.white))
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white))
           ],
         ),
       ),
     );
   }
 
-  bool isEmailValidor(String value){
-    if(EmailValidator.validate(value) == true){
-      return isNotNullValid = true; 
-    }
-    return isNotNullValid = false;
-  }
-
-  bool isNotNull(String value){
-    if(value != ""){
-       return isValid = true; 
-    }
-    return isValid = false;
-  }
-
-  Widget _entryField(String title,  myController ,{bool isPassword = false,bool isEmail = false}) {
+  Widget _entryField(String title, myController,
+      {bool isPassword = false, bool isEmail = false}) {
     //check controller , it's null?
     //check email valid
-    if (isEmail == true  && isEmailValidor(myController.text.toLowerCase()) == true ){
+    if (isEmail == true &&
+        _isEmailValidor(myController.text.toLowerCase()) == true) {
       isEmailValid = true;
     }
 
@@ -73,8 +87,8 @@ class _SignUpState extends State<SignUp> {
         children: <Widget>[
           SizedBox(
             height: 10,
-          ), 
-          TextField( 
+          ),
+          TextField(
               controller: myController,
               obscureText: isPassword,
               decoration: InputDecoration(
@@ -96,15 +110,16 @@ class _SignUpState extends State<SignUp> {
         children: <Widget>[
           Text(
             'Already have an account ?',
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.white),
+            style: TextStyle(
+                fontSize: 13, fontWeight: FontWeight.w600, color: Colors.white),
           ),
           SizedBox(
             width: 10,
           ),
           InkWell(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => signIn()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => SignIn()));
             },
             child: Text(
               'sign In',
@@ -135,7 +150,6 @@ class _SignUpState extends State<SignUp> {
               text: 'ss',
               style: TextStyle(color: Colors.white, fontSize: 30),
             ),
-            
           ]),
     );
   }
@@ -143,9 +157,9 @@ class _SignUpState extends State<SignUp> {
   Widget _inputDatadWidget() {
     return Column(
       children: <Widget>[
-        _entryField("username",nameController),
-        _entryField("email", emailController, isEmail:true),
-        _entryField("password",passwordController, isPassword: true),
+        _entryField("username", _usernameController),
+        _entryField("email", _emailController, isEmail: true),
+        _entryField("password", _passwordController, isPassword: true),
       ],
     );
   }
@@ -154,88 +168,97 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Scaffold(
-      body: SingleChildScrollView(
-        child:Container(
-            height: MediaQuery.of(context).size.height,
-            width:MediaQuery.of(context).size.width ,
-          decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Colors.grey.shade200,
-                      offset: Offset(2, 4),
-                      blurRadius: 5,
-                      spreadRadius: 2)
-                ],
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xff2196f3), Color(0xff03A9f4)])),
-          child:Stack(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: SizedBox(),
-                    ),
-                    _title(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _inputDatadWidget(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                     RaisedButton(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        color:Colors.white,
-                        child:
-                        Text('Sign Up',style: TextStyle(fontSize: 20, color: Color(0xff2196f3),fontWeight: FontWeight.bold),),
-                        onPressed:(){
-                          if ((isNotNull(nameController.text) && isNotNull(emailController.text)&& isNotNull(passwordController.text)) == true){
-                             setState(() {
-                               isNotNullValid = true; 
-                              });
-                            }
-
-                          if(isNotNullValid == true && isEmailValid == true ){
-                             Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => signIn()));
-                              
-                          }
-                          else{
-                             setState(() {
-                               message = "data invalid";  
-                              });
-                        }
-                          }
-                        ),
-                      Text(message,style: TextStyle(fontSize: 13.0,color: Colors.red),),
-                      Expanded(
-                        flex: 2,
-                        child: SizedBox(),
-                      ),
-                  ],
+        body: SingleChildScrollView(
+            child: Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.grey.shade200,
+                offset: Offset(2, 4),
+                blurRadius: 5,
+                spreadRadius: 2)
+          ],
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xff2196f3), Color(0xff03A9f4)])),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  flex: 3,
+                  child: SizedBox(),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: _signInAccountLabel(),
-              ),
-              Positioned(top: 40, left: 0, child: _backButton()),
-              Positioned(
-                  top: -MediaQuery.of(context).size.height * .15,
-                  right: -MediaQuery.of(context).size.width * .4,
-                  child: BezierContainer())
-            ],
+                _title(),
+                SizedBox(
+                  height: 10,
+                ),
+                _inputDatadWidget(),
+                SizedBox(
+                  height: 10,
+                ),
+                RaisedButton(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    color: Colors.white,
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Color(0xff2196f3),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      // check  controll it's not null
+                      if ((_isNotNull(_usernameController.text) &&
+                              _isNotNull(_emailController.text) &&
+                              _isNotNull(_passwordController.text)) ==
+                          true) {
+                        setState(() {
+                          isNotNullValid = true;
+                        });
+                      }
+                      // if valid
+                      if (isNotNullValid == true && isEmailValid == true) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => SignIn()));
+                      }
+                      // if it's valid
+                      else {
+                        setState(() {
+                          message = "data invalid";
+                        });
+                      }
+                    }),
+                Text(
+                  message,
+                  style: TextStyle(fontSize: 13.0, color: Colors.red),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: SizedBox(),
+                ),
+              ],
+            ),
           ),
-        )
-      )
-    );
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: _signInAccountLabel(),
+          ),
+          Positioned(top: 40, left: 0, child: _backButton()),
+          Positioned(
+              top: -MediaQuery.of(context).size.height * .15,
+              right: -MediaQuery.of(context).size.width * .4,
+              child: BezierContainer())
+        ],
+      ),
+    )));
   }
 }
